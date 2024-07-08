@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 
-export class CommentsPage {
-  url = '/comments.html';
+export class BasePage {
+  url = '';
   constructor(private page: Page) {}
 
   async goto(): Promise<void> {
