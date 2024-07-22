@@ -49,4 +49,58 @@ test.describe('Verify login', () => {
       expect.soft(titleWelcome).toContain('Welcome');
     },
   );
+  test(
+    'not register with incorrect data - non valid email',
+    { tag: '@GAD-R03-04' },
+    async ({ page }) => {
+      //Arrange
+
+      const registerUserData: RegisterUser = {
+        userFirstName: faker.person.firstName().replace(/[^A-Za-z]/g, ''), //g- takes into account all occurrences
+        userLastName: faker.person.lastName().replace(/[^A-Za-z]/g, ''),
+        userEmail: '#$%',
+        userPassword: faker.internet.password(),
+      };
+
+      const expectedErrorText = 'Please provide a valid email address';
+      const registerPage = new RegisterPage(page);
+      //Act
+      await registerPage.goto();
+      await registerPage.register(registerUserData);
+
+      //Assert
+      await expect(registerPage.emailErrorText).toHaveText(expectedErrorText);
+    },
+  );
+  test(
+    'not register with incorrect data - email not provided',
+    { tag: '@GAD-R03-04' },
+    async ({ page }) => {
+      //Arrange
+
+      // const registerUserData: RegisterUser = {
+      //   userFirstName: faker.person.firstName().replace(/[^A-Za-z]/g, ''), //g- takes into account all occurrences
+      //   userLastName: faker.person.lastName().replace(/[^A-Za-z]/g, ''),
+      //   userEmail: '#$%',
+      //   userPassword: faker.internet.password(),
+      // };
+
+      const registerPage = new RegisterPage(page);
+      const expectedErrorText = 'This field is required';
+
+      //Act
+      await registerPage.goto();
+      await registerPage.userFirstNameInput.fill(
+        faker.person.firstName().replace(/[^A-Za-z]/g, ''),
+      );
+      await registerPage.userLastNameInput.fill(
+        faker.person.firstName().replace(/[^A-Za-z]/g, ''),
+      );
+      await registerPage.userPasswordInput.fill(faker.internet.password());
+      await registerPage.registerButton.click();
+
+      //Assert
+      await expect(registerPage.emailErrorText).toHaveText(expectedErrorText);
+    },
+  );
 });
