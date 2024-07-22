@@ -77,14 +77,6 @@ test.describe('Verify login', () => {
     { tag: '@GAD-R03-04' },
     async ({ page }) => {
       //Arrange
-
-      // const registerUserData: RegisterUser = {
-      //   userFirstName: faker.person.firstName().replace(/[^A-Za-z]/g, ''), //g- takes into account all occurrences
-      //   userLastName: faker.person.lastName().replace(/[^A-Za-z]/g, ''),
-      //   userEmail: '#$%',
-      //   userPassword: faker.internet.password(),
-      // };
-
       const registerPage = new RegisterPage(page);
       const expectedErrorText = 'This field is required';
 
