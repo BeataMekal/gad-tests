@@ -10,15 +10,11 @@ test.describe('Verify login', () => {
     { tag: '@GAD-R02-01' },
     async ({ page }) => {
       //Arrange
-      const loginUserData: LoginUser = {
-        userEmail: testUser1.userEmail,
-        userPassword: testUser1.userPassword,
-      };
       const loginPage = new LoginPage(page);
 
       //Act
       await loginPage.goto();
-      await loginPage.loginNew(loginUserData);
+      await loginPage.login(testUser1);
 
       const welcomePage = new WelcomePage(page);
       const title = await welcomePage.title();
@@ -36,16 +32,11 @@ test.describe('Verify login', () => {
         userEmail: testUser1.userEmail,
         userPassword: 'incorrectPassword',
       };
-      // const userEmail = testUser1.userEmail;
-      // const userPassword = 'incorrectPassword';
       const loginPage = new LoginPage(page);
 
       //Act
       await loginPage.goto();
-      await loginPage.login(
-        loginUserData.userEmail,
-        loginUserData.userPassword,
-      );
+      await loginPage.login(loginUserData);
 
       //Assert
       await expect
