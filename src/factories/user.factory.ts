@@ -1,4 +1,4 @@
-import { RegisterUser } from '../models/user.models';
+import { RegisterUser } from '../models/user.model';
 import { faker } from '@faker-js/faker';
 
 export function randomUserData(): RegisterUser {
