@@ -1,3 +1,4 @@
+import { RegisterUser } from '../src/models/user.models';
 import { LoginPage } from '../src/pages/login.page';
 import { RegisterPage } from '../src/pages/register.page';
 import { WelcomePage } from '../src/pages/welcome.page';
@@ -10,23 +11,23 @@ test.describe('Verify login', () => {
     { tag: '@GAD-R03-01 @GAD-R03-02 @GAD-R03-03' },
     async ({ page }) => {
       //Arrange
-      const userFirstName = faker.person.firstName().replace(/[^A-Za-z]/g, ''); //g- takes into account all occurrences
-      const userLastName = faker.person.lastName().replace(/[^A-Za-z]/g, '');
-      const userEmail = faker.internet.email({
-        firstName: userFirstName,
-        lastName: userLastName,
+
+      const registerUserData: RegisterUser = {
+        userFirstName: faker.person.firstName().replace(/[^A-Za-z]/g, ''), //g- takes into account all occurrences
+        userLastName: faker.person.lastName().replace(/[^A-Za-z]/g, ''),
+        userEmail: '',
+        userPassword: faker.internet.password(),
+      };
+
+      registerUserData.userEmail = faker.internet.email({
+        firstName: registerUserData.userFirstName,
+        lastName: registerUserData.userLastName,
       });
-      const userPassword = faker.internet.password();
 
       const registerPage = new RegisterPage(page);
       //Act
       await registerPage.goto();
-      await registerPage.register(
-        userFirstName,
-        userLastName,
-        userEmail,
-        userPassword,
-      );
+      await registerPage.register(registerUserData);
       const expectedAlertPopupText = 'User created';
 
       //Assert
@@ -38,7 +39,10 @@ test.describe('Verify login', () => {
 
       //Assert
       await loginPage.goto();
-      await loginPage.login(userEmail, userPassword);
+      await loginPage.login(
+        registerUserData.userEmail,
+        registerUserData.userPassword,
+      );
 
       const welcomePage = new WelcomePage(page);
       const titleWelcome = await welcomePage.title();
