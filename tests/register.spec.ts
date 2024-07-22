@@ -10,7 +10,7 @@ test.describe('Verify login', () => {
     { tag: '@GAD-R03-01 @GAD-R03-02 @GAD-R03-03' },
     async ({ page }) => {
       //Arrange
-      const userFirstName = faker.person.firstName();
+      const userFirstName = faker.person.firstName().replace(/[^A-Za-z]/g, ''); //g- takes into account all occurrences
       const userLastName = faker.person.lastName();
       const userEmail = faker.internet.email({
         firstName: userFirstName,
