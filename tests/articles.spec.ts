@@ -33,4 +33,60 @@ test.describe('Verify articles', () => {
       .soft(articlePage.articleBody)
       .toHaveText(articleData.body, { useInnerText: true });
   });
+  test(
+    'reject creating article without title',
+    { tag: '@GAD-R04-01' },
+    async ({ page }) => {
+      //Arrange
+      const loginPage = new LoginPage(page);
+      await loginPage.goto();
+      await loginPage.login(testUser1);
+
+      const articlesPage = new ArticlesPage(page);
+      await articlesPage.goto();
+
+      //Act
+      await articlesPage.addArticleButtonLogged.click();
+
+      const addArticleView = new AddArticleView(page);
+      await expect.soft(addArticleView.header).toBeVisible();
+
+      const articleData = randomNewArticle();
+      articleData.title = '';
+      const expectedErrorText = 'Article was not created';
+
+      await addArticleView.createArticle(articleData);
+
+      //Assert
+      await expect(addArticleView.alertPopup).toHaveText(expectedErrorText);
+    },
+  );
+  test(
+    'reject creating article without body',
+    { tag: '@GAD-R04-01' },
+    async ({ page }) => {
+      //Arrange
+      const loginPage = new LoginPage(page);
+      await loginPage.goto();
+      await loginPage.login(testUser1);
+
+      const articlesPage = new ArticlesPage(page);
+      await articlesPage.goto();
+
+      //Act
+      await articlesPage.addArticleButtonLogged.click();
+
+      const addArticleView = new AddArticleView(page);
+      await expect.soft(addArticleView.header).toBeVisible();
+
+      const articleData = randomNewArticle();
+      articleData.body = '';
+      const expectedErrorText = 'Article was not created';
+
+      await addArticleView.createArticle(articleData);
+
+      //Assert
+      await expect(addArticleView.alertPopup).toHaveText(expectedErrorText);
+    },
+  );
 });
