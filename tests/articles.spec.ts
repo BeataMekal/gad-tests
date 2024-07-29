@@ -23,6 +23,27 @@ test.describe('Verify articles', () => {
 
     await expect.soft(addArticleView.header).toBeVisible();
   });
+  test(
+    'user can access single article',
+    { tag: '@GAD-R04-03' },
+    async ({ page }) => {
+      //Arrange
+      const articlePage = new ArticlePage(page);
+
+      const articleData = randomNewArticle();
+
+      await addArticleView.createArticle(articleData);
+      await articlesPage.goto();
+
+      //Act
+      await page.getByText(articleData.title).click();
+      //Assert
+      await expect.soft(articlePage.articleTitle).toHaveText(articleData.title);
+      await expect
+        .soft(articlePage.articleBody)
+        .toHaveText(articleData.body, { useInnerText: true });
+    },
+  );
   test('create new article', { tag: '@GAD-R04-01' }, async ({ page }) => {
     //Arrange
     const articlePage = new ArticlePage(page);
@@ -78,7 +99,6 @@ test.describe('Verify articles', () => {
       async () => {
         //Arrange
         const expectedErrorText = 'Article was not created';
-
         const articleData = randomNewArticle(129);
 
         //Act
@@ -94,7 +114,6 @@ test.describe('Verify articles', () => {
       async ({ page }) => {
         //Arrange
         const articlePage = new ArticlePage(page);
-
         const articleData = randomNewArticle(128);
 
         //Act

@@ -10,4 +10,7 @@ export class ArticlesPage extends BasePage {
   constructor(page: Page) {
     super(page);
   }
+  async gotoArticle(title: string): Promise<void> {
+    await this.page.getByText(title).click();
+  }
 }
