@@ -29,9 +29,10 @@ test.describe('Verify register', () => {
       //Assert
       await expect(registerPage.alertPopup).toHaveText(expectedAlertPopupText);
 
+      const expectedLoginTitle = 'Login';
       await loginPage.waitForPageToLoadUrl();
       const titleLogin = await loginPage.getTitle();
-      expect.soft(titleLogin).toContain('Login');
+      expect.soft(titleLogin).toContain(expectedLoginTitle);
 
       //Assert
       await loginPage.login({
@@ -39,8 +40,9 @@ test.describe('Verify register', () => {
         userPassword: registerUserData.userPassword,
       });
 
+      const expectedWelcomeTitle = 'Welcome';
       const titleWelcome = await welcomePage.getTitle();
-      expect.soft(titleWelcome).toContain('Welcome');
+      expect.soft(titleWelcome).toContain(expectedWelcomeTitle);
     },
   );
   test(
