@@ -1,4 +1,4 @@
-import { randomNewArticle } from '../src/factories/article.factory';
+import { prepareRandomArticle } from '../src/factories/article.factory';
 import { ArticlePage } from '../src/pages/article.page';
 import { ArticlesPage } from '../src/pages/articles.page';
 import { LoginPage } from '../src/pages/login.page';
@@ -30,7 +30,7 @@ test.describe('Verify articles', () => {
       //Arrange
       const articlePage = new ArticlePage(page);
 
-      const articleData = randomNewArticle();
+      const articleData = prepareRandomArticle();
 
       await addArticleView.createArticle(articleData);
       await articlesPage.goto();
@@ -47,7 +47,7 @@ test.describe('Verify articles', () => {
   test('create new article', { tag: '@GAD-R04-01' }, async ({ page }) => {
     //Arrange
     const articlePage = new ArticlePage(page);
-    const articleData = randomNewArticle();
+    const articleData = prepareRandomArticle();
 
     //Act
     await addArticleView.createArticle(articleData);
@@ -65,7 +65,7 @@ test.describe('Verify articles', () => {
       //Arrange
       const expectedErrorText = 'Article was not created';
 
-      const articleData = randomNewArticle();
+      const articleData = prepareRandomArticle();
       articleData.title = '';
 
       //Act
@@ -82,7 +82,7 @@ test.describe('Verify articles', () => {
       //Arrange
       const expectedErrorText = 'Article was not created';
 
-      const articleData = randomNewArticle();
+      const articleData = prepareRandomArticle();
       articleData.body = '';
 
       //Act
@@ -99,7 +99,7 @@ test.describe('Verify articles', () => {
       async () => {
         //Arrange
         const expectedErrorText = 'Article was not created';
-        const articleData = randomNewArticle(129);
+        const articleData = prepareRandomArticle(129);
 
         //Act
         await addArticleView.createArticle(articleData);
@@ -114,7 +114,7 @@ test.describe('Verify articles', () => {
       async ({ page }) => {
         //Arrange
         const articlePage = new ArticlePage(page);
-        const articleData = randomNewArticle(128);
+        const articleData = prepareRandomArticle(128);
 
         //Act
         await addArticleView.createArticle(articleData);
