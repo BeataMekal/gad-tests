@@ -4,7 +4,7 @@ import { ArticlePage } from '../../src/pages/article.page';
 import { ArticlesPage } from '../../src/pages/articles.page';
 import { LoginPage } from '../../src/pages/login.page';
 import { testUser1 } from '../../src/test-data/user-data';
-import { AddArticleView } from '../../src/views/add-article.views';
+import { AddArticleView } from '../../src/views/add-article.view';
 import test, { expect } from '@playwright/test';
 
 test.describe.configure({ mode: 'serial' });
