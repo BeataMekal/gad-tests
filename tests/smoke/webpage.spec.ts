@@ -6,8 +6,8 @@ import { expect, test } from '@playwright/test';
 test.describe('Verify service main page', () => {
   test('home page title', { tag: '@GAD-R01-01' }, async ({ page }) => {
     //Arrange
-    const homePage = new HomePage(page);
     const expectedGADTitle = 'GAD';
+    const homePage = new HomePage(page);
 
     //Act
     await homePage.goto();
@@ -19,8 +19,8 @@ test.describe('Verify service main page', () => {
 
   test('articles page title', { tag: '@GAD-R01-02' }, async ({ page }) => {
     //Arrange
-    const articlesPage = new ArticlesPage(page);
     const expectedArticlesTitle = 'Articles';
+    const articlesPage = new ArticlesPage(page);
     //Act
     await articlesPage.goto();
 
@@ -31,8 +31,8 @@ test.describe('Verify service main page', () => {
 
   test('comments page title', { tag: '@GAD-R01-02' }, async ({ page }) => {
     //Arrange
-    const commentsPage = new CommentsPage(page);
     const expectedCommentsTitle = 'Comments';
+    const commentsPage = new CommentsPage(page);
 
     //Act
     await commentsPage.goto();

@@ -9,13 +9,13 @@ test.describe('Verify menu main buttons', () => {
     { tag: '@GAD-R01-03' },
     async ({ page }) => {
       //Arrange
-      const articlesPage = new ArticlesPage(page);
       const expectedCommentsTitle = 'Comments';
+      const articlesPage = new ArticlesPage(page);
+      const commentsPage = new CommentsPage(page);
 
       //Act
       await articlesPage.goto();
       await articlesPage.mainMenu.commentsButton.click();
-      const commentsPage = new CommentsPage(page);
       const title = await commentsPage.getTitle();
 
       //Assert
@@ -27,9 +27,9 @@ test.describe('Verify menu main buttons', () => {
     { tag: '@GAD-R01-03' },
     async ({ page }) => {
       //Arrange
+      const expectedArticlesTitle = 'Articles';
       const articlesPage = new ArticlesPage(page);
       const commentsPage = new CommentsPage(page);
-      const expectedArticlesTitle = 'Articles';
 
       //Act
       await commentsPage.goto();
@@ -45,13 +45,13 @@ test.describe('Verify menu main buttons', () => {
     { tag: '@GAD-R01-03' },
     async ({ page }) => {
       //Arrange
-      const articlesPage = new ArticlesPage(page);
       const expectedGADTitle = 'GAD';
+      const articlesPage = new ArticlesPage(page);
+      const homePage = new HomePage(page);
 
       //Act
       await articlesPage.goto();
       await articlesPage.mainMenu.homePage.click();
-      const homePage = new HomePage(page);
       const title = await homePage.getTitle();
 
       //Assert
