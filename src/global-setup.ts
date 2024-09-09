@@ -1,5 +1,12 @@
-// async function globalSetup(): Promise<void> {
-//   // console.log('⚠️  URL:', process.env.BASE_URL);
-// }
+import { STORAGE_STATE } from '../playwright.config';
+import * as fs from 'fs';
 
-// export default globalSetup;
+async function globalSetup(): Promise<void> {
+  if (fs.existsSync(STORAGE_STATE)) {
+    fs.unlinkSync(STORAGE_STATE);
+  }
+
+  // console.log('⚠️ Global setup');
+}
+
+export default globalSetup;
