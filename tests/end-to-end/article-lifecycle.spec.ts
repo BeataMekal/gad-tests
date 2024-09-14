@@ -1,13 +1,12 @@
-import { prepareRandomArticle } from '../../src/factories/article.factory';
-import { AddArticleModel } from '../../src/models/article.model';
-import { ArticlePage } from '../../src/pages/article.page';
-import { ArticlesPage } from '../../src/pages/articles.page';
-import { AddArticleView } from '../../src/views/add-article.view';
+import { prepareRandomArticle } from '@_src/factories/article.factory';
+import { AddArticleModel } from '@_src/models/article.model';
+import { ArticlePage } from '@_src/pages/article.page';
+import { ArticlesPage } from '@_src/pages/articles.page';
+import { AddArticleView } from '@_src/views/add-article.view';
 import test, { expect } from '@playwright/test';
 
 test.describe.configure({ mode: 'serial' });
 test.describe('Create, verify and delete article', () => {
-  // let loginPage: LoginPage;
   let articlesPage: ArticlesPage;
   let addArticleView: AddArticleView;
   let articleData: AddArticleModel;

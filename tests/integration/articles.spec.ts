@@ -1,19 +1,14 @@
-import { prepareRandomArticle } from '../../src/factories/article.factory';
-import { ArticlePage } from '../../src/pages/article.page';
-import { ArticlesPage } from '../../src/pages/articles.page';
-import { AddArticleView } from '../../src/views/add-article.view';
-// import { LoginPage } from '../src/pages/login.page';
+import { prepareRandomArticle } from '@_src/factories/article.factory';
+import { ArticlePage } from '@_src/pages/article.page';
+import { ArticlesPage } from '@_src/pages/articles.page';
+import { AddArticleView } from '@_src/views/add-article.view';
 import { expect, test } from '@playwright/test';
 
-// import * as fs from 'fs';
-
 test.describe('Verify articles', () => {
-  // let loginPage: LoginPage;
   let articlesPage: ArticlesPage;
   let addArticleView: AddArticleView;
 
   test.beforeEach(async ({ page }) => {
-    // loginPage = new LoginPage(page);
     articlesPage = new ArticlesPage(page);
     addArticleView = new AddArticleView(page);
 
