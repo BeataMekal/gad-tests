@@ -58,7 +58,7 @@ test.describe('Create, verify and delete article', () => {
       const expectedNoResultText = 'No data';
 
       //Act
-      await articlePage.deleteArticle();
+      articlesPage = await articlePage.deleteArticle();
 
       //Assert
       await articlesPage.waitForPageToLoadUrl();
