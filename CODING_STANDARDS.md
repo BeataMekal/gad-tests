@@ -115,7 +115,7 @@ await expect(page.getByText('Name')).toHaveText(expectedText);
 
 **Example:**
 
-```typescript
+````typescript
 // ✅
 class MyClass {
   myProperty: string;
@@ -171,20 +171,20 @@ class HomePage {
     await this.contactUsButton.click();
   }
 }
-```
-
+````
 
 Page objects methods usage i.e. in tests:
-
 
 ```typescript
 // ✅ using page object returned by method
 const signInPage = await homePage.clickSignInButton();
-
 
 // ❌ creating page object while it can be returned from method
 const contactUsPage = new ContactUsPage(page);
 await homePage.clickContactUsButton();
 contactUsPage.doStuff();
 ```
+
+```
+
 ```
