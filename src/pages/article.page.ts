@@ -15,8 +15,7 @@ export class ArticlePage extends BasePage {
   articleTitle = this.page.getByTestId('article-title');
   articleBody = this.page.getByTestId('article-body');
   deleteIcon = this.page.getByTestId('delete');
-  searchInput = this.page.getByTestId('search-input');
-  goSearchButton = this.page.getByTestId('search-button');
+
   noResultText = this.page.getByTestId('no-results');
   addCommentButton = this.page.locator('#add-new');
   alertPopup = this.page.getByTestId('alert-popup');
@@ -35,11 +34,6 @@ export class ArticlePage extends BasePage {
     });
     this.deleteIcon.click();
     return new ArticlesPage(this.page);
-  }
-
-  async searchArticle(phrase: string): Promise<void> {
-    await this.searchInput.fill(phrase);
-    await this.goSearchButton.click();
   }
 
   getArticleComment(body: string): ArticleComment {
