@@ -1,5 +1,4 @@
 import { prepareRandomArticle } from '@_src/factories/article.factory';
-import { ArticlePage } from '@_src/pages/article.page';
 import { ArticlesPage } from '@_src/pages/articles.page';
 import { AddArticleView } from '@_src/views/add-article.view';
 import { expect, test } from '@playwright/test';
@@ -21,11 +20,9 @@ test.describe('Verify articles', () => {
     { tag: '@GAD-R04-03 @logged' },
     async ({ page }) => {
       //Arrange
-      const articlePage = new ArticlePage(page);
-
       const articleData = prepareRandomArticle();
 
-      await addArticleView.createArticle(articleData);
+      const articlePage = await addArticleView.createArticle(articleData);
       await articlesPage.goto();
 
       //Act
@@ -37,24 +34,18 @@ test.describe('Verify articles', () => {
         .toHaveText(articleData.body, { useInnerText: true });
     },
   );
-  test(
-    'create new article',
-    { tag: '@GAD-R04-01 @logged' },
-    async ({ page }) => {
-      //Arrange
-      const articlePage = new ArticlePage(page);
-      const articleData = prepareRandomArticle();
+  test('create new article', { tag: '@GAD-R04-01 @logged' }, async () => {
+    //Arrange
+    const articleData = prepareRandomArticle();
 
-      //Act
-      await addArticleView.createArticle(articleData);
-
-      //Assert
-      await expect.soft(articlePage.articleTitle).toHaveText(articleData.title);
-      await expect
-        .soft(articlePage.articleBody)
-        .toHaveText(articleData.body, { useInnerText: true });
-    },
-  );
+    //Act
+    const articlePage = await addArticleView.createArticle(articleData);
+    //Assert
+    await expect.soft(articlePage.articleTitle).toHaveText(articleData.title);
+    await expect
+      .soft(articlePage.articleBody)
+      .toHaveText(articleData.body, { useInnerText: true });
+  });
   test(
     'reject creating article without title',
     { tag: '@GAD-R04-01 @logged' },
@@ -108,14 +99,12 @@ test.describe('Verify articles', () => {
     test(
       'create article with title  with 128 signs',
       { tag: '@GAD-R04-02 @logged' },
-      async ({ page }) => {
+      async () => {
         //Arrange
-        const articlePage = new ArticlePage(page);
         const articleData = prepareRandomArticle(128);
 
         //Act
-        await addArticleView.createArticle(articleData);
-
+        const articlePage = await addArticleView.createArticle(articleData);
         //Assert
         await expect
           .soft(articlePage.articleTitle)
