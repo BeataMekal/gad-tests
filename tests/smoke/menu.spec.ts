@@ -19,7 +19,6 @@ test.describe('Verify menu main buttons', () => {
       const expectedCommentsTitle = 'Comments';
 
       //Act
-      await articlesPage.goto();
       const commentsPage = await articlesPage.mainMenu.ClickCommentsButton();
       const title = await commentsPage.getTitle();
 
