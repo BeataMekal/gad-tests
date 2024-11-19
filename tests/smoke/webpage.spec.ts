@@ -1,46 +1,39 @@
-import { ArticlesPage } from '@_src/pages/articles.page';
-import { CommentsPage } from '@_src/pages/comments.page';
-import { HomePage } from '@_src/pages/home.page';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@_src/fixtures/merge.fixture';
 
 test.describe('Verify service main page', () => {
-  test('home page title', { tag: '@GAD-R01-01' }, async ({ page }) => {
+  test('home page title', { tag: '@GAD-R01-01' }, async ({ homePage }) => {
     //Arrange
-    const expectedGADTitle = 'GAD';
-    const homePage = new HomePage(page);
-
-    //Act
-    await homePage.goto();
-
+    const expectedHomePageTitle = 'GAD';
     //Assert
     const title = await homePage.getTitle();
-    expect(title).toContain(expectedGADTitle);
+    expect(title).toContain(expectedHomePageTitle);
   });
 
-  test('articles page title', { tag: '@GAD-R01-02' }, async ({ page }) => {
-    //Arrange
-    const expectedArticlesTitle = 'Articles';
-    const articlesPage = new ArticlesPage(page);
-    //Act
-    await articlesPage.goto();
+  test(
+    'articles page title',
+    { tag: '@GAD-R01-02' },
+    async ({ articlesPage }) => {
+      //Arrange
+      const expectedArticlesTitle = 'Articles';
 
-    //Assert
-    const title = await articlesPage.getTitle();
-    expect(title).toContain(expectedArticlesTitle);
-  });
+      //Assert
+      const title = await articlesPage.getTitle();
+      expect(title).toContain(expectedArticlesTitle);
+    },
+  );
 
-  test('comments page title', { tag: '@GAD-R01-02' }, async ({ page }) => {
-    //Arrange
-    const expectedCommentsTitle = 'Comments';
-    const commentsPage = new CommentsPage(page);
+  test(
+    'comments page title',
+    { tag: '@GAD-R01-02' },
+    async ({ commentsPage }) => {
+      //Arrange
+      const expectedCommentsTitle = 'Comments';
 
-    //Act
-    await commentsPage.goto();
-
-    //Assert
-    const title = await commentsPage.getTitle();
-    expect(title).toContain(expectedCommentsTitle);
-  });
+      //Assert
+      const title = await commentsPage.getTitle();
+      expect(title).toContain(expectedCommentsTitle);
+    },
+  );
 
   test('home page title simple', async ({ page }) => {
     await page.goto('');
