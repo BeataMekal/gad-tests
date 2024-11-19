@@ -1,24 +1,11 @@
 import { prepareRandomArticle } from '@_src/factories/article.factory';
-import { ArticlesPage } from '@_src/pages/articles.page';
-import { AddArticleView } from '@_src/views/add-article.view';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@_src/fixtures/merge.fixture';
 
 test.describe('Verify articles', () => {
-  let articlesPage: ArticlesPage;
-  let addArticleView: AddArticleView;
-
-  test.beforeEach(async ({ page }) => {
-    articlesPage = new ArticlesPage(page);
-
-    await articlesPage.goto();
-    addArticleView = await articlesPage.clickAddArticleButtonLogged();
-
-    await expect.soft(addArticleView.addNewHeader).toBeVisible();
-  });
   test(
     'user can access single article',
     { tag: '@GAD-R04-03 @logged' },
-    async ({ page }) => {
+    async ({ addArticleView, articlesPage, page }) => {
       //Arrange
       const articleData = prepareRandomArticle();
 
@@ -34,22 +21,26 @@ test.describe('Verify articles', () => {
         .toHaveText(articleData.body, { useInnerText: true });
     },
   );
-  test('create new article', { tag: '@GAD-R04-01 @logged' }, async () => {
-    //Arrange
-    const articleData = prepareRandomArticle();
+  test(
+    'create new article',
+    { tag: '@GAD-R04-01 @logged' },
+    async ({ addArticleView }) => {
+      //Arrange
+      const articleData = prepareRandomArticle();
 
-    //Act
-    const articlePage = await addArticleView.createArticle(articleData);
-    //Assert
-    await expect.soft(articlePage.articleTitle).toHaveText(articleData.title);
-    await expect
-      .soft(articlePage.articleBody)
-      .toHaveText(articleData.body, { useInnerText: true });
-  });
+      //Act
+      const articlePage = await addArticleView.createArticle(articleData);
+      //Assert
+      await expect.soft(articlePage.articleTitle).toHaveText(articleData.title);
+      await expect
+        .soft(articlePage.articleBody)
+        .toHaveText(articleData.body, { useInnerText: true });
+    },
+  );
   test(
     'reject creating article without title',
     { tag: '@GAD-R04-01 @logged' },
-    async () => {
+    async ({ addArticleView }) => {
       //Arrange
       const expectedErrorText = 'Article was not created';
 
@@ -66,7 +57,7 @@ test.describe('Verify articles', () => {
   test(
     'reject creating article without body',
     { tag: '@GAD-R04-01 @logged' },
-    async () => {
+    async ({ addArticleView }) => {
       //Arrange
       const expectedErrorText = 'Article was not created';
 
@@ -84,7 +75,7 @@ test.describe('Verify articles', () => {
     test(
       'reject creating article with title exceeding 128 signs',
       { tag: '@GAD-R04-02 @logged' },
-      async () => {
+      async ({ addArticleView }) => {
         //Arrange
         const expectedErrorText = 'Article was not created';
         const articleData = prepareRandomArticle(129);
@@ -99,7 +90,7 @@ test.describe('Verify articles', () => {
     test(
       'create article with title  with 128 signs',
       { tag: '@GAD-R04-02 @logged' },
-      async () => {
+      async ({ addArticleView }) => {
         //Arrange
         const articleData = prepareRandomArticle(128);
 
