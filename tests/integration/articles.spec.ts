@@ -88,7 +88,7 @@ test.describe('Verify articles', () => {
       },
     );
     test(
-      'create article with title  with 128 signs',
+      'create article with title with 128 signs',
       { tag: '@GAD-R04-02 @logged' },
       async ({ addArticleView }) => {
         //Arrange
