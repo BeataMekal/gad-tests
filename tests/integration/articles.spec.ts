@@ -1,3 +1,4 @@
+import { RESPONSE_TIMEOUT } from '@_pw-config';
 import { prepareRandomArticle } from '@_src/factories/article.factory';
 import { expect, test } from '@_src/fixtures/merge.fixture';
 import { waitForResponse } from '@_src/utils/wait.util';
@@ -136,4 +137,36 @@ test.describe('Verify articles', () => {
       },
     );
   });
+  test(
+    'should return created article from API',
+    { tag: '@GAD-R07-04 @logged' },
+    async ({ addArticleView, page }) => {
+      //Arrange
+      const articleData = prepareRandomArticle(128);
+
+      const responsePromise = page.waitForResponse(
+        (response) => {
+          // eslint-disable-next-line no-console
+          console.log(
+            response.url(),
+            response.status(),
+            response.request().method(),
+          );
+          return (
+            response.url().includes('/api/articles') &&
+            response.request().method() == 'GET'
+          );
+        },
+        { timeout: RESPONSE_TIMEOUT },
+      );
+
+      //Act
+      const articlePage = await addArticleView.createArticle(articleData);
+      const response = await responsePromise;
+
+      //Assert
+      await expect.soft(articlePage.articleTitle).toHaveText(articleData.title);
+      expect(response.ok()).toBeTruthy();
+    },
+  );
 });
